@@ -56,10 +56,6 @@ Creating remote repository in github
 
 	    $ git add Login.java or git add .
 
-	    $ git config --global user.name "swapnil" 
-
-	    $ git config --global user.email "abc@gmail.com"
-
 	    $ git commit Login.java -m "login module code"
 		
 	    $ git push
@@ -110,6 +106,7 @@ Phase-3
 
 #If you want to download modified content from remote repo then apply this command, But you dont want to merge modified content in your working area then apply this command
 	$ git fetch
+	$ git merge
 
 # Skip staging
 	git commit -am "submit all pending changes"
@@ -141,4 +138,80 @@ Phase-3
 6.Check the log of Login.java using log command.
 	$ git log <filename>
 
+========
+Phase-4 
+========
+# History - Deep Dive
+	$ git log <filename>
+	$ git log
+
+	Options:
+		- git log -n2
+		- git log --author="swapnil"
+		- git log --since="2016/12/13"  
+		- git log --until="2016/12/13"
+		- git log --grep="DB code"		
+		- git log --oneline (if we want to see logs on high level that time we can use this command ie. only commit ids and msg)
+
+#Qn.
+Show me all logs committed by user "Ram" AND has a commit message "math function" in it.
+
+$ git log --author="Ram" --grep="commit msg" -n2
+
+=======
+Phase-5
+=======
+# GIT Commands
+
+1.  
+	$ git status 
+
+	$ git diff <filename>
+
+	$ git diff --staged <filename> 
+
+	$ git diff  089871935..fc894a6bf6d2e (if we want to see difference between two files)(use commit ids).
+
+2. Deleting a file
+
+	A.) $ git rm <filename>
+	    $ git commit <filename> -m "comment"
+	    $ git push
+       
+4. Renaming a file/folder
+	A.) $ git mv Login.java <new-name>
+	    $ git commit -m "rename Login"
+	    $ git push
+			
+#
+Carry the history for new file from old file
+	- $ git log --follow <new-name>
+
+=======
+Phase-6
+=======
+
+# Undoing the changes:
+
+# undo/revert local changes from source area in exits files. ie. present in remote repo.
+	$ git checkout <filename>
+
+# Unstage the changes from STAGE area
+	$ git reset HEAD <filename>
+
+# Move changes from .git to source area 
+	$ git reset --mixed HEAD~1
+
+# Move changes from .git to stage area
+	$ git reset --soft HEAD~1
+
+# Remove changes from everywhere
+	$ git reset --hard HEAD~1
+
+# Show all the files with content difference that are modified as part of a commit.
+git show <SHA-VALUE>
+
+# List only files that are committed as part of a revision.
+	$ git diff-tree --no-commit-id --name-only -r <SHA-VALUE>
+	
 
