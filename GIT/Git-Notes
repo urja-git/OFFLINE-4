@@ -259,5 +259,111 @@ HEAD is a pointer in git which
 	- Always points to the latest commit in the repository
 	- Always points to tip of the current reposiotory
 	- Always points to parent of the next commit
+
+Day-8
+======
+Merging:
+=========
+# FAST-FORWARD MERGE
+
+BEFORE MERGE:
+-------------
+			master
+			 |
+----C1--C2---C3
+			 |
+			 ----------C4----C5  
+								dev_1.2.3
+		
+AFTER MERGE:
+-------------
+ 			     			master
+			     			  |
+----C1----C2---C3------C4----C5
+		             		  |
+			     			dev_1.2.3
+
+
+Excercise:
+===========
+# List all the branches
+	$ git branch
+
+# Create a new branch
+	$ git branch dev_1.2.3
+
+# Add some changes to newely created branch i.e dev_1.2.3
+	$ Modify/Add some files	
+	$ git add	
+	$ git commit 
+
+# Now merge the code from dev_1.2.3 to master branch
+  Before merge, make sure that you are on target branch i.e master (source branch: dev_1.2.3)
+	$ git checkout master
+
+# You have master code in source since currently checkout branch is master. Now bring/merge the changes from dev_1.2.3 to master by running below command. 
+Git merge command merges the changes from dev_1.2.3 to master.
+Verify the chages.
+	$ git merge dev_1.2.3
+
+# observe the changes from dev_1.2.3 into master branch.
+
+# git push
+
+
+
+MERGING W/ CONFLICT:
+=================
+
+# List all the branches
+	$ git branch
+
+# Create a new branch
+	$ git branch dev_1.2.3
+
+
+# Take a file which is common in master and dev_1.2.3 branch.
+  ex: Login.java
+
+# Make sure Login.java has below content in master and dev_1.2.3 branch
+	Login.java
+		line#5 --> int a = 10;
+	
+# To create a conflict situation, we need to modify same line in two branches with different content.
+
+	ex: Login.java (master)
+			line#5 --> int a =100;
+		
+		Login.java (dev_1.2.3)
+			line#5 --> int a = 200;
+
+
+# Now merge the code from dev_1.2.3 to master branch
+  Before merge, make sure that you are on target branch i.e master (source branch: dev_1.2.3)
+	$ git checkout master
+
+# You have master code now, since currently checkout branch is master. Now bring/merge the changes from dev_1.2.3 to master by running below command. 
+Git merge command merges the changes from dev_1.2.3 to master.
+
+	$ git merge dev_1.2.3
+
+# Run git status command to list conflict file
+
+#Resolve the conflict and commit the merge
+
+# Run git push command to move the merge to Remote.
+
+
+# What is Conflict:
+If two users modify the same file in source and target branches and if the same line has different content, git can't decide which user's code it has to take. we call this situation as conflict.
+
+# How do you resolve the conflict: 
+- Open the conflict file--> remove conflict markers-->select the right content.
+- git add
+- git commit
+- git push --all
+
+
+
 	
 
