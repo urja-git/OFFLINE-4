@@ -1,0 +1,44 @@
+============
+Phase-1
+============
+
+#1
+	Java Build and Deployment End-To-End Workflow.
+
+#2
+Basics
+	- Java program
+	- manual compilation (javac filename)
+	- manual Run (java class-name)
+
+#3
+What is Maven? Why we need a build tool?
+	
+
+#4
+Installation
+	- Download jdk and extract it to your favourite location.
+	- Download Apache Maven and extract it to your favourite location.
+	- Set-up below Environment variables for Maven and JDK in order to run Maven
+	  and JDK commands from any directory in the system.
+		1. JAVA_HOME
+		2. M2_HOME
+		3. PATH
+
+Installing JDK and Maven:
+=======================
+  A. create $USER_HOME/.bashrc
+  
+  B. create below Environment variables
+	export JAVA_HOME=/home/User/Directory/Directory/jdk1.8.0_191
+	export M2_HOME=/home/User/Directory/Directory/apache-maven-3.6.0
+	export PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH
+
+
+
+Load .bashrc using below command or open new ternimial
+	$ source .bashrc
+ 
+Verify Installation
+	$ java -version
+	$ mvn --version or mvn -v
