@@ -1,0 +1,31 @@
+Installation Steps:
+===========	==========	
+# Update apt-get cache
+	$ sudo apt-get update
+
+# Install docker dependencies
+	$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+# Add GPG key to apt repository
+	$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Setup Stable repository:
+	$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	
+# Update apt package index:
+	$ sudo apt-get update
+	
+# Install Latest version of Docker
+	$ sudo apt-get install docker-ce
+
+#
+Installation Check
+sudo docker --version
+
+# container creation 
+docker run --name guru -it ubuntu /bin/bash
+
+#
+uninstall docker:
+$ sudo apt-get remove docker-ce
+
