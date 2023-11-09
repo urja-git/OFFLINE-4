@@ -23,9 +23,16 @@ Installation Check
 sudo docker --version
 
 # container creation 
-docker run --name guru -it ubuntu /bin/bash
+docker run -it -d --name guru ubuntu /bin/bash
 
 #
 uninstall docker:
 $ sudo apt-get remove docker-ce
+
+
+# useradd -m -d /home/grras -s /bin/bash grras
+# passwd grras
+Enter new UNIX password: grras
+Retype new UNIX password: grras
+passwd: password updated successfully
 
