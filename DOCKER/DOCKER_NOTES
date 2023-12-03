@@ -1,0 +1,323 @@
+		Docker - The Container Virtualization Tool
+	==================================================
+
+Que1). Diff bet'n Physical server, Virtual server and Docker container?
+=>Physical Server :- We are creating one physical server machine with 1TB HDD, CPU and RAM, if we required another multiple server that time we need same configuration machine, 
+that means we will do seprate OS, HDD, RAM, in all machine so the time and cost will be increasing and testing and deployment process will be slow.
+
+=>Virtual Machine :- If we are using virtual machine in one Computer, we are installing multiple virtual machine in computer and after install seprate OS and allocating some Storage and Ram.
+ means we are virtualize the hardware, means we can supply the same hardware to this computer. again the all process will be going on one machine but its taking more time, means process will be slow.
+
+=>Docker Container :- If we are using DOCKER, docker also provide virtualization, means install docker in one computer there is no need to install seprate OS,HDD and RAM.
+
+==================================================================
+
+Que2). what is docker?
+=> Docker is containerization tool, Docker is an extension of Linux Containers (LXC): a unique kind of lightweight,application-centric virtualization that drastically reduces overhead and makes it easier to deploy software on servers. 
+
+==================================================================
+
+Que3). why docker? 
+=> Docker allows systems administrators and developers to build applications that can be run on any Linux distribution or hardware in a virtualized sandbox 
+   without the need to make custom builds for different environments. These features are attracting a lot of big names,
+   and have turned Docker into one of the most successful open source projects of the last year. It seems Docker is here to stay, so what does this mean for Linux?
+
+Que4). who can use it?
+=>Docker has been designed in a way that it can be incorporated into most DevOps applications, including Puppet, Chef, Vagrant, and Ansible, 
+  or it can be used on its own to manage development environments. The primary selling point is that it simplifies many of the tasks typically done by these other applications.
+
+========
+Day-1:
+========
+#
+Supported Platforms-
+	- Docker is supported on
+		- Linux platforms
+			Ubuntu, RHEL, CentOs..etc.
+		- Windows  
+		- OS X 		
+		  
+	- Cloud Platforms
+		Amazon EC2
+		Rackspace Cloud
+		Google compute Engine..etc.
+		Azure
+
+Note:
+Linux containers can be created on Windows and OS X.
+HOW?- Windows Docker installer contains a tiny Linux virtual machine. Docker creates linux container on top of this tiny Linux VM.
+
+
+Requirements:
+	- 64-bit architecture	  
+	- Linux 3.8 or later Kernel versions
+
+
+#
+Requirements Check:
+- Check Kernel version
+	$ uname -a Or -r
+
+NOTE: Kernel can also be upgraded.
+
+- Check OS name:
+	$ lsb_release -a / -cs
+	$ cat /etc/os-release	
+
+
+Installation Steps:
+===========	==========	
+# Update apt-get cache
+	$ sudo apt-get update
+
+# Install docker dependencies
+	$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+# Add GPG key to apt repository
+	$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Setup Stable repository:
+	$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	
+# Update apt package index:
+	$ sudo apt-get update
+	
+# Install Latest version of Docker
+	$ sudo apt-get install docker-ce
+
+#
+Installation Check
+sudo docker --version
+
+#
+uninstall docker:
+$ sudo apt-get remove docker-ce
+
+=======
+DAY-2
+=======
+#
+Managing docker containers
+===============================
+#
+docker run command:
+- "docker run" command provides all lanuching capabilities for docker to create a container.
+- we use `docker run` to create new containers.
+
+
+# Creating first container
+
+sudo docker run -i -t or -it ubuntu /bin/bash
+
+	-i : opens STDIN from the container
+	-t : tells docker to assign a pseudo-tty to the
+		 container.
+	-it : provides interactive shell or terminal(it).
+	
+	`ubuntu`: is an image and also called as "stock image" or "base image".
+			  This will be downloaded by default from 'Docker hub' for the first
+			  time.
+	
+	/bin/bash: which shell need to be installed in the terminal (shell that run in the terminal)
+
+
+
+# Inspect the new container
+1.
+	# hostname -i (check ip address of created new container using this command)
+        # cd /  
+        # ls (newly created container have own root directory check using this command)
+   	# ps -ef (using this command we can check background process)
+ 
+2.      #cat /etc/hosts (newly created container got own hosts file check using this command)
+
+        What is etc/hosts file?
+        => etc/hosts file contains hostname details ex. root@2d51b0e393f6:/# so this is hostname (2d51b0e393f6)
+        => check hostname by using this command in newly created container (# hostname).
+
+3.      suppose if we want to change hostname of machine newly or any then do the following steps: 
+	# vim /etc/hosts (in this hosts file copy first line ex 127.0.0.1 localhost and paste in that below and rename the loclhost in the second line ex. 127.0.0.1 www.server1.com)
+	THEN
+	# vim /etc/hostname (rename the first line of this file give same name what we are given in the hosts file ex. www.server1.com)
+
+4.	# ifconfig (suppose if we want to check ifconfig command in container so run below command before ifconfig command)
+ 
+	# apt-get update
+	# apt-get install net-tools
+	THEN
+
+5.	# ifconfig
+		observe etho and lo network interfaces with 
+		ip address
+
+6.	# ps -ef
+
+
+#Check which shell we are using within container 
+-  echo $SHELL
+
+#What is SHELL?
+- Open a terminal and type anything in the terminal means it is just a text box so you can type anything and say ENTER and it says COMMAND not found means what, 
+  some program is running in this terminal so  this is not text box more than text box, some program is running that is called SHELL, What SHELL is bash. here bash SHELL is running, 
+  what bash SHELL is doing SHELL take the input from user means you, it will take the input to the kernel and kernel process that command and it will give you result, 
+  so the SHELL act as interface between user and operating system. for Example, pwd command so bash SHELL intrpret this command and it will take this to kernel 
+  and kernel process this request and send output to user, all is doing by SHELL, inside this one program is running ie bash SHELL, it is default by linux.
+- There are different types of Shell
+  1) bash
+  2) ksh
+  3) csh
+  4) sh 
+ so many different shells are present.
+   
+
+#
+Shotdown a container
+"exit" to stop the container
+
+# List all containers(stopped and running)
+	$ sudo docker ps -a
+
+# List running containers only
+	$ docker ps
+
+# ps command output shows
+	- Image name from which container is created
+	- ID - container can be identified using short UUID, longer UUID Or name.
+	- Status of the container (Up / Exited)
+	- Name
+
+
+# See longer UUID of the container 
+	$ docker ps -a --no-trunc -q"
+
+# show the last container which you have created(stopped/running)
+	$ sudo docker ps -l
+
+# Naming the container
+	$ docker run --name guru -it ubuntu /bin/bash
+
+# How to create multiple container in one command (creating container in background mode)
+        $ docker run -it -d --name <container-name> ubuntu /bin/bash
+        	-d is daemon mode, means container run in background mode, without -d you will get new terminal and with -d container create in background mode.
+
+Note:- sequence doesnt matter after run -d before -it or --name but after --name container name is compulsory 
+
+Note: Two containers can't have the same name.
+
+# Rename a container (rename exist container)
+	$ docker rename db-server3 db-server-name3
+
+# Deleting a container 
+	$ docker rm ID/name (If we want to remove container so first check container is in running condition or not by using docker ps -a command, because we can not remove running container,
+  				then use the below  command)
+
+#Deleting a container forcefully 
+	$ docker rm -f ID/name (If we want to remove container forcefully whatever it is in running condition or not)
+
+
+# Delete all containers at once.
+ 	$ docker rm `docker ps -a -q` (delete all container at once by using ids -q take ids of all container)
+
+#Showing docker container ids only
+	$ docker ps -a -q
+
+#docker info
+
+# Starting a stopped container
+	$ sudo docker start name/ID
+	$ sudo docker stop name/ID
+	$ sudo docker restart name/ID
+
+# Shortcut Keys
+	- push a running container in background mode.
+	# Ctrl + p + q
+
+	- short cut to 'exit' from the container.
+	# Ctrl + d 
+	
+
+# Attaching to a running container (login to container)
+	$ docker attach name/ID 
+	$ docker attach name/ID 
+	
+
+# List Stopped containers only
+	$ docker ps -a -f status=exited
+	   Where Status can be exited / running
+
+# Stopped containers
+	$ docker stop <container-name> (SIGTERM) 
+
+# Stopped containers forcefully
+	$ docker kill <container-name> (SIGKILL) 
+
+
+
+=>Setup SSH for the container
+	ssh username@172.17.0.2
+
+- Create an user and set up password
+$ useradd -m -d /home/grras -s /bin/bash grras
+$ passwd username
+
+- Install ssh server
+$ apt-get update
+$ apt-get install openssh-server
+
+- Start the ssh
+$ service ssh start (status/stop)
+	
+- Connect to the container using ssh
+$ ssh username@172.17.0.2
+
+=========
+DAY-3:
+=========
+	# Inspecting the container's processes from host machine
+	- docker top <container-name>
+
+
+# Stoping a container from 'host machine'
+	- docker stop <container-name>
+	- docker stop <container-id> (like that ee319cddd42e)(SIGTERM)
+	- docker kill <container-name> (SIGKILL)
+
+# Show last 4 containers (stopped/running)
+	- docker ps -n4
+
+# Pause containers
+	- $ docker pause <container-name or ids>
+
+# Un-pause containers
+	- $ docker unpause <container-name or ids>
+
+
+# Find More About The Container
+- docker inspect comamnd "interrogates" the container and returns the info like.. configuration info, names, commands, n/w configurations, stopped/running ..etc.
+	---------        -------------                                            ------------------  -----  --------  ------------------  ---------------	 
+	 Examples:
+	$ docker inspect <container-name or ids> 
+		Note :- This command shows info about container.
+
+	$ sudo docker inspect <container-name or ids> | grep IPAddress | tail -1 
+		Note :- This command shows IPAddress of the running container.(EX. "IPAddress": "172.17.0.2", If we want to remove special character then us e below command).
+
+==========================
+Run docker command without sudo.	
+------
+	1. Create the "docker" group
+		$ sudo groupadd docker
+
+	2. Add your user to this group
+		$ sudo usermod -aG docker swapnil
+
+	3. Logout and Login back so that your group membership
+	   is re-evaluated.
+
+	4. Check group existance:
+		$ sudo grep docker /etc/group
+
+	5. Delete the group
+		$ sudo groupdel docker
+	
+
