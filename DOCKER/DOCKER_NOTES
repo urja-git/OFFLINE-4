@@ -513,4 +513,60 @@ Testing Image
 # Verify if nginx is running from the container.
 	$ http://172.17.0.2:80
 	
+Note:- If we want to add somthing in Dockerfile and we want to build again same Dockerfile that time we use this command, 
+       So internally skipping all already run command and running only added command using this command.
+ 
+# Build image without existing image	
+	- Use --no-cache option
+	$ docker build --no-cache -t="username_of_dockerhub/image-name" .
+
+#
+User Images Syntax:
+	swapnilhub/nginx (username_of_dockerhub/image-name)
+
+#
+Official Images Syntax:
+	ubuntu
+
+User images are controled by Docker users.
+official images are controled by Docker core team.
+
+
+# Specifying Image via tags
+	- ubuntu:14.04
+	  ubuntu- is image name
+	  14.04 - is called tag
+
+# Pulling the images
+	- docker pull <image-name>
+
+# Searching docker images in docker hub
+	- docker search <image-name> (Ex. puppet)
+	- docker search <image-name> (Ex. jenkins)
+
+
+DAY-7:
+#
+Docker Image layers
+=========================
+- Checking the history of our docker image
+	$ docker history <Image-Id>
+
+# Container creation process
+  How contaner is created:
+		
+		Writable Layer		
+		-		
+		flipkart application		
+		Apache image
+		nginx image
+		-		
+		Ubuntu Base Image(rootfs)
+		-
+		Bootfs:
+		    cgroups, namespace, divicemapper/aufs..etc.
+		Kernel
+
+
+
 
